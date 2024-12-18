@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+  form {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #121212; /* Preto profundo */
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Sombra intensa */
+  }
+
+  form h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #e0e0e0; /* Texto claro */
+  }
+
+  table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 600px;
+  }
+
+  th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #333; /* Borda escura */
+      color: #e0e0e0; /* Texto claro */
+  }
+
+  th {
+      background-color: #1f1f1f; /* Fundo mais escuro */
+  }
+
+  input[type="text"], input[type="number"], select, textarea {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #1f1f1f; /* Fundo escuro */
+      border: 2px solid #333;
+      color: #e0e0e0; /* Texto claro */
+      border-radius: 5px;
+      width: 100%;
+      margin-bottom: 10px;
+      transition: border-color 0.3s ease-in-out;
+  }
+
+  input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #1e90ff; /* Azul vibrante */
+  }
+
+  .btn {
+      background-color: #1e90ff; /* Azul vibrante */
+      color: #fff;
+      border: 1px solid #1e90ff;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+      margin: 0 10px;
+  }
+
+  .btn:hover {
+      background-color: #0077cc; /* Azul mais escuro no hover */
+      transform: scale(1.05);
+  }
+
+  .btn-danger {
+      background-color: #e63946; /* Vermelho vibrante */
+      border: 1px solid #e63946;
+  }
+
+  .btn-danger:hover {
+      background-color: #c21d29; /* Vermelho mais escuro no hover */
+  }
+
+  .error-message {
+      color: #ff4c4c; /* Vermelho para erros */
+      font-size: 14px;
+      margin-top: 5px;
+  }
+
+  .buttons-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+  }
+
+  a {
+      text-decoration: none;
+      color: #1e90ff;
+  }
+
+  a:hover {
+      color: #0077cc; /* Azul mais escuro no hover */
+  }
+</style>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h1>Editar Carro</h1>
+    <table>
+      {{ form.as_table }}
+    </table>
+    <div>
+      <div class="buttons-container">
+        <input type="submit" value="Salvar Alterações" class="btn btn-primary">
+        <a href="{% url 'cars_list' %}" class="btn btn-secondary">Cancelar</a>
+        <a href="{% url 'car_delete' pk=object.pk %}" class="btn btn-danger">Deletar Carro</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

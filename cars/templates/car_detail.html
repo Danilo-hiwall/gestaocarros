@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .car-card {
+      background-color: #121212; /* Fundo preto profundo */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Sombra intensa */
+      border: 1px solid #444; /* Borda cinza escuro fina */
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+      max-width: 700px;
+      margin: 20px auto;
+  }
+
+  .car-card:hover {
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1); /* Sombra branca suave */
+      transform: translateY(-5px);
+  }
+
+  .car-card img {
+      width: 100%;
+      height: 250px; /* Imagens mais altas para maior impacto */
+      object-fit: cover;
+      border-bottom: 2px solid #333; /* Borda na base da imagem */
+  }
+
+  .car-card h2 {
+      font-size: 1.8rem;
+      color: #e0e0e0; /* Texto claro */
+      margin: 15px 0;
+  }
+
+  .car-card p {
+      font-size: 1rem;
+      color: #b0b0b0; /* Cinza claro */
+      margin-bottom: 15px;
+  }
+
+  .buttons-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+  }
+
+  .btn {
+      background-color: #1e90ff; /* Azul intenso */
+      color: #fff;
+      border: 1px solid #1e90ff;
+      padding: 10px 25px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+      margin: 0 10px;
+  }
+
+  .btn:hover {
+      background-color: #0077cc; /* Azul mais escuro no hover */
+      transform: scale(1.05);
+  }
+
+  .btn-danger {
+      background-color: #e63946; /* Vermelho agressivo */
+      border: 1px solid #e63946;
+  }
+
+  .btn-danger:hover {
+      background-color: #c21d29; /* Vermelho mais intenso no hover */
+  }
+
+  .error-message {
+      color: #ff4c4c; /* Vermelho vibrante para erros */
+      font-size: 14px;
+      margin-top: 5px;
+  }
+
+  a {
+      text-decoration: none !important;
+      color: #1e90ff;
+  }
+
+  a:hover {
+      color: #0077cc; /* Azul mais escuro ao passar o mouse */
+  }
+</style>
+  <div class="car-card">
+    {% if object.photo %}
+      <img src="{{ object.photo.url }}" alt="{{ object.model }} - {{ object.brand }}">
+    {% endif %}
+      <h2>{{ object.brand }} {{ object.model }}</h2>
+      <p><strong>Ano de fabricação:</strong> {{ object.factory_year }}</p>
+      <p><strong>Ano do modelo:</strong> {{ object.model_year }}</p>
+      <p><strong>Placa:</strong> {{ object.plate }}</p>
+      <p><strong>Preço:</strong> R$ {{ object.value }}</p>
+      {% if object.bio %}
+        <p><strong>Descrição:</strong>  {{ object.bio }}</p>
+      {% endif %}
+  </div>
+  {% if user.is_authenticated %}
+    <div class="buttons-container">
+      <a href="{% url 'car_update' pk=object.pk %}" class="btn btn-primary">Editar</a>
+      <a href="{% url 'car_delete' pk=object.pk %}" class="btn btn-danger">Deletar</a>
+    </div>
+  {% endif %}
+{% endblock %}
